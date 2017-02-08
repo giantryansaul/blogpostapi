@@ -1,10 +1,16 @@
 # Blog API
 import json
 import sqlite3
+import argparse
 
 from flask import Flask, request
 
 app = Flask(__name__)
+parser = argparse.ArgumentParser(description='Blog Post API')
+parser.add_argument('--database', type=str, default='blog.db',
+                    help='Database file for the app. Example: blog.db')
+cl_args = parser.parse_args()
+db_file = cl_args.database
 
 
 def get_next_post_id(cursor):
@@ -18,7 +24,7 @@ def get_next_post_id(cursor):
     return post_id
 
 
-def create_connection(db_file='blog.db'):
+def create_connection():
     """
     Returns SQLite connection
     """
